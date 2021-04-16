@@ -1,0 +1,37 @@
+{
+  "name": "jscadparams",
+  "version": "0.1.0",
+  "description": "jscad parameter definitions generator and parser.",
+  "keywords": [
+    "jscad",
+    "getParameterDefinitions",
+    "main",
+    "function",
+    "parser",
+    "generator"
+  ],
+  "author": "Davor Hrg <hrgdavor@gmail.com>",
+  "homepage": "https://github.com/hrgdavor/threejscad#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrgdavor/threejscad.git"
+  },
+  "scripts": {
+    "test": "ava"
+  },
+  "bugs": {
+    "url": "https://github.com/hrgdavor/threejscad/issues"
+  },
+  "devDependencies": {
+    "ava": "^3.15.0"
+  }
+}
