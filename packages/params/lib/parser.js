@@ -26,7 +26,7 @@ function parseParams(script){
         if(line[0] === '}') break
 
         if(line[0] === '/'){
-            if(lines[i+1] && lines[i+1][0] === '/'){
+            if(lines[i+1] && lines[i+1].indexOf('/') !== -1){
                 // group
                 const def = parseComment(line)
                 let name = '_group_' +(groupIndex++)
@@ -44,9 +44,17 @@ function parseParams(script){
                 i++
             }
         }else{
-            const def = parseDef(line)
-            def.caption = def.name
-            defs.push(def)
+            const idx = line.indexOf('/')
+            if(idx === -1){
+                const def = parseDef(line)
+                def.caption = def.name
+                defs.push(def)
+            }else{
+                defs.push(parseOne(
+                    line.substring(idx).trim(),
+                    line.substring(0,idx).trim()
+                ))
+            }
         }
         i++
     }
@@ -89,7 +97,7 @@ function parseDef(line){
     if(line[line.length-1] == ',') line = line.substring(0,line.length-1)
     let idx = line.indexOf('=')
 
-    if(idx == -1)idx = line.indexOf(':')
+    if(idx == -1) idx = line.indexOf(':')
 
     if(idx == -1){
         return {name:line, type:'text'}
@@ -110,7 +118,12 @@ function parseDef(line){
             ret.type = 'number'
             ret.initial = parseFloat(initial)
         }else{
-            ret.initial = eval(initial)
+            try {
+                ret.initial = eval(initial)
+            } catch (e) {
+                console.log('problem evaluating inital value:', initial)
+                throw e
+            }
         }
 
         return ret

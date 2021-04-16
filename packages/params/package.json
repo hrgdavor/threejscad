@@ -1,5 +1,5 @@
-{
-  "name": "jscadparams",
+  {
+  "name": "@threejscad/params",
   "version": "0.1.0",
   "description": "jscad parameter definitions generator and parser.",
   "keywords": [

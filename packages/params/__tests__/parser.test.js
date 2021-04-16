@@ -27,6 +27,7 @@ const sampleScript = `function main({
   bottomPieceHeight=20,
 
 /* Wall thickness :group1 */
+
   /* Vertical outside */
   thickOut=0.8,
   /* Vertical inside */
@@ -34,6 +35,19 @@ const sampleScript = `function main({
   /* Bottom */
   thickBottom=0.8,
 }){`
+
+const sampleScript2 = `function main({
+  width=145,            // Width 
+  height=100,           // height
+  division=4,           // Number of rows (== columns)
+  bottomPieceHeight=20, // Water space(mm)
+
+// Wall thickness :group1
+
+  thickOut=0.8,	    // Vertical outside
+  thickIn=0.8,      // Vertical inside
+  thickBottom=0.8,  // Bottom
+})`
 
 var inputTest = `const jscad = require('@jscad...');
 
@@ -48,6 +62,10 @@ ${sampleScript}
 
 test('multiple params', t => {
 	t.deepEqual( parseParams(inputTest), sampleParams)
+});
+
+test('CURRENT multiple params', t => {
+	t.deepEqual( parseParams(sampleScript2), sampleParams)
 });
 
 
