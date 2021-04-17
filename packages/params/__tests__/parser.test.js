@@ -17,7 +17,7 @@ const sampleParams = [
   {name:'thickBottom',caption:'Bottom', type:'number', initial:0.8},
 ]
 
-const sampleScript = `function main({
+const sampleScript = `function main({//jscadparams
   /* Width */
   width=145,
   height=100,
@@ -36,7 +36,7 @@ const sampleScript = `function main({
   thickBottom=0.8,
 }){`
 
-const sampleScript2 = `function main({
+const sampleScript2 = `function main({//jscadparams
   width=145,            // Width 
   height=100,           // height
   division=4,           // Number of rows (== columns)

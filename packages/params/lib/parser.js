@@ -14,12 +14,9 @@ function parseParams(script){
 
     let i = 0, line, next, lineNum
     while(i<lines.length){
-        line = lines[i].code.replace(/ /g,'')
-        if(line === 'functionmain({' || line ==='params={...{' || line ==='constdefaults={...{' ){
-            i++
-            break;
-        }
+        line = lines[i].code.trim()
         i++
+        if(line.length>12 && line.substring(line.length-13) == '//jscadparams') break;
     }
 
     let groupIndex = 1
