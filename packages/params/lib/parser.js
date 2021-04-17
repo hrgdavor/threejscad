@@ -6,29 +6,35 @@ parseParams.parseComment = parseComment
 parseParams.parseDef = parseDef
 
 function parseParams(script){
-    const lines = script.split('\n').map(l=>l.trim()).filter(l=>l)
-    let i = 0, line
+    let lines = script.split('\n').map(l=>l.trim())
+
+    lines = lines.map((l,i)=>{
+    	return {code:l, line:i+1, group: l[0] == '/' && !lines[i+1]}
+    }).filter(l=>l.code)
+
+    let i = 0, line, next, lineNum
     while(i<lines.length){
-        line = lines[i]
+        line = lines[i].code
         if(line.startsWith('function') && line.replace(/ /g,'') === 'functionmain({'){
-            console.log(line)
             i++
             break;
         }
         i++
     }
-    
+
     let groupIndex = 1
     const defs = []
 
     while(i<lines.length){
-        line = lines[i]
+        line = lines[i].code
+        lineNum = lines[i].line
+        next = lines[i+1] ? lines[i+1].code : ''
         if(line[0] === '}') break
 
         if(line[0] === '/'){
-            if(lines[i+1] && lines[i+1].indexOf('/') !== -1){
+            if(lines[i].group || next.indexOf('/') !== -1){
                 // group
-                const def = parseComment(line)
+                const def = parseComment(line, lineNum)
                 let name = '_group_' +(groupIndex++)
                 let caption = def.caption
 
@@ -39,20 +45,21 @@ function parseParams(script){
                 }
                 defs.push({name, type: 'group', caption})
                 
-            }else if(lines[i+1]){
-                defs.push(parseOne(line,lines[i+1]))
+            }else if(next){
+                defs.push(parseOne(line,next, lineNum, lines[i+1].line))
                 i++
             }
         }else{
             const idx = line.indexOf('/')
             if(idx === -1){
-                const def = parseDef(line)
+                const def = parseDef(line, lineNum)
                 def.caption = def.name
                 defs.push(def)
             }else{
                 defs.push(parseOne(
                     line.substring(idx).trim(),
-                    line.substring(0,idx).trim()
+                    line.substring(0,idx).trim(),
+                    lineNum,lineNum
                 ))
             }
         }
@@ -62,9 +69,9 @@ function parseParams(script){
     return defs
 }
 
-function parseOne(comment, line){
-    const {caption, options} = parseComment(comment)
-    let def = {caption, ...parseDef(line)}
+function parseOne(comment, code, line1, line2){
+    const {caption, options} = parseComment(comment, line1)
+    let def = {caption, ...parseDef(code, line2)}
     if(options){
         def = {...def, ...options}
         if(def.type === 'checkbox' && def.hasOwnProperty('initial')) def.checked = true
@@ -73,7 +80,7 @@ function parseOne(comment, line){
     return def;
 }
 
-function parseComment(comment){
+function parseComment(comment, line){
     const prefix = comment.substring(0,2)
     if(prefix === '//') comment = comment.substring(2)
     if(prefix === '/*') comment = comment.substring(2, comment.length-2)
@@ -83,28 +90,33 @@ function parseComment(comment){
     const ret = {}
     const idx = comment.indexOf('{')
     if(idx !== -1){
-        ret.options = eval('('+comment.substring(idx)+')')
+    	try{
+	        ret.options = eval('('+comment.substring(idx)+')')
+    	}catch(e){
+    		console.log('Error in line '+line);
+    		console.log(comment);
+    		throw e
+    	}
         comment = comment.substring(0,idx).trim()
     }
     
     ret.caption = comment
 
-
     return ret
 }
 
-function parseDef(line){
-    if(line[line.length-1] == ',') line = line.substring(0,line.length-1)
-    let idx = line.indexOf('=')
+function parseDef(code, line){
+    if(code[code.length-1] == ',') code = code.substring(0,code.length-1)
+    let idx = code.indexOf('=')
 
-    if(idx == -1) idx = line.indexOf(':')
+    if(idx == -1) idx = code.indexOf(':')
 
     if(idx == -1){
-        return {name:line, type:'text'}
+        return {name:code, type:'text'}
     }else{
-        let initial = line.substring(idx+1).trim()
+        let initial = code.substring(idx+1).trim()
         
-        const ret = {type:'text', name:line.substring(0,idx)}
+        const ret = {type:'text', name:code.substring(0,idx)}
 
         if(initial === 'true' || initial === 'false'){
             ret.type = 'checkbox'
@@ -121,6 +133,8 @@ function parseDef(line){
             try {
                 ret.initial = eval(initial)
             } catch (e) {
+	    		console.log('Error in line '+line);
+	    		console.log(code);
                 console.log('problem evaluating inital value:', initial)
                 throw e
             }
@@ -129,4 +143,3 @@ function parseDef(line){
         return ret
     }
 }
-

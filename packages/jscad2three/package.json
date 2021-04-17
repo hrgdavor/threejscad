@@ -1,0 +1,35 @@
+{
+  "name": "jscad2three",
+  "version": "0.1.0",
+  "description": "Convert jscad model to threejs presentation (Object3D).",
+  "keywords": [
+    "threejs",
+    "csg",
+    "convert",
+    "jscad",
+    "buffergeometry",
+    "mesh",
+    "object3d"
+  ],
+  "author": "Davor Hrg <hrgdavor@gmail.com>",
+  "homepage": "https://github.com/hrgdavor/threejscad#readme",
+  "license": "MIT",
+  "main": "jscad2three.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "jscad2three.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrgdavor/threejscad.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/hrgdavor/threejscad/issues"
+  }
+}

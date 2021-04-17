@@ -44,9 +44,9 @@ const sampleScript2 = `function main({
 
 // Wall thickness :group1
 
-  thickOut=0.8,	    // Vertical outside
-  thickIn=0.8,      // Vertical inside
-  thickBottom=0.8,  // Bottom
+  thickOut=0.8,    // Vertical outside
+  thickIn=0.8,     // Vertical inside
+  thickBottom=0.8, // Bottom
 })`
 
 var inputTest = `const jscad = require('@jscad...');
