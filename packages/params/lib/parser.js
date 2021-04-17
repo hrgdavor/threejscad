@@ -14,8 +14,8 @@ function parseParams(script){
 
     let i = 0, line, next, lineNum
     while(i<lines.length){
-        line = lines[i].code
-        if(line.startsWith('function') && line.replace(/ /g,'') === 'functionmain({'){
+        line = lines[i].code.replace(/ /g,'')
+        if(line === 'functionmain({' || line ==='params={...{' || line ==='constdefaults={...{' ){
             i++
             break;
         }
