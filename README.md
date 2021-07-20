@@ -10,6 +10,7 @@ Issues created based on threejscad explorations
 
 Discussions
  - [845](https://github.com/jscad/OpenJSCAD.org/discussions/845) Typed Arrays usage and conversion
+ - [883](https://github.com/jscad/OpenJSCAD.org/discussions/883) V1 -> V2 migration guide
 
 PR's
  - [869](https://github.com/jscad/OpenJSCAD.org/pull/869) Performance improvement for measure bounding box
