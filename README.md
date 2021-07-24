@@ -17,6 +17,7 @@ PR's
  - [859](https://github.com/jscad/OpenJSCAD.org/pull/859) clone utility / immutability
  - [866](https://github.com/jscad/OpenJSCAD.org/pull/866) change applyTransforms and transform functions to clone geometry
  - [878](https://github.com/jscad/OpenJSCAD.org/pull/878) performance, use webgl2 as default context
+ - [891](https://github.com/jscad/OpenJSCAD.org/pull/891) developer friendly syntax for getParameterDefinitions
 
 New feature proposal:
  - [875](https://github.com/jscad/OpenJSCAD.org/discussions/875) developer friendly syntax for getParameterDefinitions
