@@ -17,33 +17,26 @@ const sampleParams = [
   {name:'thickBottom',caption:'Bottom', type:'number', initial:0.8},
 ]
 
-const sampleScript = `function main({//jscadparams
-  /* Width */
-  width=145,
+const sampleScript = `function main({// @jscad-params
+  width=145, // Width
   height=100,
-  /* Number of rows (== columns)*/
-  division=4,
-  /* Water space(mm) */
-  bottomPieceHeight=20,
+  division=4,// Number of rows (== columns)
+  bottomPieceHeight=20,// Water space(mm)
 
 /* Wall thickness :group1 */
-
-  /* Vertical outside */
-  thickOut=0.8,
-  /* Vertical inside */
-  thickIn=0.8,
-  /* Bottom */
-  thickBottom=0.8,
+  thickOut=0.8, //Vertical outside
+  
+  thickIn=0.8,// Vertical inside
+  thickBottom=0.8,//Bottom
 }){`
 
-const sampleScript2 = `function main({//jscadparams
+const sampleScript2 = `function main({// @jscad-params
   width=145,            // Width 
   height=100,           // height
   division=4,           // Number of rows (== columns)
   bottomPieceHeight=20, // Water space(mm)
 
 // Wall thickness :group1
-
   thickOut=0.8,    // Vertical outside
   thickIn=0.8,     // Vertical inside
   thickBottom=0.8, // Bottom

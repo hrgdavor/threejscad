@@ -1,22 +1,17 @@
 'use strict';
 
-module.exports = parseParams;
-parseParams.parseOne = parseOne
-parseParams.parseComment = parseComment
-parseParams.parseDef = parseDef
-
 function parseParams(script){
     let lines = script.split('\n').map(l=>l.trim())
 
     lines = lines.map((l,i)=>{
-    	return {code:l, line:i+1, group: l[0] == '/' && !lines[i+1]}
+        return {code:l, line:i+1, group: l[0] == '/' && !lines[i+1]}
     }).filter(l=>l.code)
 
     let i = 0, line, next, lineNum
     while(i<lines.length){
         line = lines[i].code.trim()
         i++
-        if(line.length>12 && line.substring(line.length-13) == '//jscadparams') break;
+        if(line.length>12 && line.indexOf('@jscad-params') !== -1) break;
     }
 
     let groupIndex = 1
@@ -29,23 +24,18 @@ function parseParams(script){
         if(line[0] === '}') break
 
         if(line[0] === '/'){
-            if(lines[i].group || next.indexOf('/') !== -1){
-                // group
-                const def = parseComment(line, lineNum)
-                let name = '_group_' +(groupIndex++)
-                let caption = def.caption
+            // group
+            const def = parseComment(line, lineNum)
+            let name = '_group_' +(groupIndex++)
+            let caption = def.caption
 
-                const idx = caption.lastIndexOf(':')
-                if(idx !== -1){
-                    name = caption.substring(idx+1).trim()
-                    caption = caption.substring(0,idx).trim()
-                }
-                defs.push({name, type: 'group', caption})
-                
-            }else if(next){
-                defs.push(parseOne(line,next, lineNum, lines[i+1].line))
-                i++
+            const idx = caption.lastIndexOf(':')
+            if(idx !== -1){
+                name = caption.substring(idx+1).trim()
+                caption = caption.substring(0,idx).trim()
             }
+            defs.push({name, type: 'group', caption, ...def.options})
+                        
         }else{
             const idx = line.indexOf('/')
             if(idx === -1){
@@ -69,9 +59,18 @@ function parseParams(script){
 function parseOne(comment, code, line1, line2){
     const {caption, options} = parseComment(comment, line1)
     let def = {caption, ...parseDef(code, line2)}
+    def.caption = def.caption || def.name
     if(options){
         def = {...def, ...options}
         if(def.type === 'checkbox' && def.hasOwnProperty('initial')) def.checked = true
+        if(def.type === 'slider'){
+            if(def.min === undefined){
+                def.min=0
+            }
+            if(def.max === undefined){
+                def.max = def.initial * 2 ||100
+            }
+        }
     }
 
     return def;
@@ -87,13 +86,13 @@ function parseComment(comment, line){
     const ret = {}
     const idx = comment.indexOf('{')
     if(idx !== -1){
-    	try{
-	        ret.options = eval('('+comment.substring(idx)+')')
-    	}catch(e){
-    		console.log('Error in line '+line);
-    		console.log(comment);
-    		throw e
-    	}
+        try{
+            ret.options = eval('('+comment.substring(idx)+')')
+        }catch(e){
+            console.log('Error in line '+line);
+            console.log(comment);
+            throw e
+        }
         comment = comment.substring(0,idx).trim()
     }
     
@@ -103,7 +102,7 @@ function parseComment(comment, line){
 }
 
 function parseDef(code, line){
-    if(code[code.length-1] == ',') code = code.substring(0,code.length-1)
+    if(code[code.length-1] == ',') code = code.substring(0,code.length-1).trim()
     let idx = code.indexOf('=')
 
     if(idx == -1) idx = code.indexOf(':')
@@ -113,7 +112,7 @@ function parseDef(code, line){
     }else{
         let initial = code.substring(idx+1).trim()
         
-        const ret = {type:'text', name:code.substring(0,idx)}
+        const ret = {type:'text', name:code.substring(0,idx).trim()}
 
         if(initial === 'true' || initial === 'false'){
             ret.type = 'checkbox'
@@ -130,9 +129,11 @@ function parseDef(code, line){
             try {
                 ret.initial = eval(initial)
             } catch (e) {
-	    		console.log('Error in line '+line);
-	    		console.log(code);
+                console.log('Error in line '+line);
+                console.log(code);
                 console.log('problem evaluating inital value:', initial)
+                e = new EvalError(e.message, 'code', line);
+                e.lineNumber = line
                 throw e
             }
         }
@@ -140,3 +141,8 @@ function parseDef(code, line){
         return ret
     }
 }
+
+module.exports = parseParams;
+parseParams.parseOne = parseOne
+parseParams.parseComment = parseComment
+parseParams.parseDef = parseDef
