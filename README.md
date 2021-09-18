@@ -28,4 +28,4 @@ New feature proposal:
  - [858](https://github.com/jscad/OpenJSCAD.org/discussions/858) New connectors proposal 
  - [837](https://github.com/jscad/OpenJSCAD.org/discussions/837) Feature proposal for openscad website url scheme
 
-Integration with cadhub [893](https://github.com/jscad/OpenJSCAD.org/discussions/893)
+[x] Integration with cadhub [893](https://github.com/jscad/OpenJSCAD.org/discussions/893)
