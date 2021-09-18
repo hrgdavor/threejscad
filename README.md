@@ -20,7 +20,7 @@ PR's
  - [866](https://github.com/jscad/OpenJSCAD.org/pull/866) change applyTransforms and transform functions to clone geometry
  - [878](https://github.com/jscad/OpenJSCAD.org/pull/878) performance, use webgl2 as default context
  - [891](https://github.com/jscad/OpenJSCAD.org/pull/891) developer friendly syntax for getParameterDefinitions
- - [897](https://github.com/jscad/OpenJSCAD.org/pull/897) fix [#114](https://github.com/jscad/OpenJSCAD.org/issues/114)
+ - [x] [897](https://github.com/jscad/OpenJSCAD.org/pull/897) fix [#114](https://github.com/jscad/OpenJSCAD.org/issues/114)
  - [x] [886](https://github.com/jscad/OpenJSCAD.org/pull/886) fix [885](https://github.com/jscad/OpenJSCAD.org/issues/885) TypeError: Cannot read property 'isClosed' ...
 
 New feature proposal:
