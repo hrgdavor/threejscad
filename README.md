@@ -18,13 +18,13 @@ PR's
  - [ ] [869](https://github.com/jscad/OpenJSCAD.org/pull/869) Performance improvement for measure bounding box
  - [ ] [859](https://github.com/jscad/OpenJSCAD.org/pull/859) clone utility / immutability
  - [ ] [866](https://github.com/jscad/OpenJSCAD.org/pull/866) change applyTransforms and transform functions to clone geometry
- - [ ] [878](https://github.com/jscad/OpenJSCAD.org/pull/878) performance, use webgl2 as default context
- - [ ] [891](https://github.com/jscad/OpenJSCAD.org/pull/891) developer friendly syntax for getParameterDefinitions
+ - [x] [878](https://github.com/jscad/OpenJSCAD.org/pull/878) performance, use webgl2 as default context
+ - [x] [891](https://github.com/jscad/OpenJSCAD.org/pull/891) developer friendly syntax for getParameterDefinitions
  - [x] [897](https://github.com/jscad/OpenJSCAD.org/pull/897) fix [#114](https://github.com/jscad/OpenJSCAD.org/issues/114)
  - [x] [886](https://github.com/jscad/OpenJSCAD.org/pull/886) fix [885](https://github.com/jscad/OpenJSCAD.org/issues/885) TypeError: Cannot read property 'isClosed' ...
 
 New feature proposal:
- - [ ] [875](https://github.com/jscad/OpenJSCAD.org/discussions/875) developer friendly syntax for getParameterDefinitions
+ - [x] [875](https://github.com/jscad/OpenJSCAD.org/discussions/875) developer friendly syntax for getParameterDefinitions
  - [ ] [858](https://github.com/jscad/OpenJSCAD.org/discussions/858) New connectors proposal 
  - [ ] [837](https://github.com/jscad/OpenJSCAD.org/discussions/837) Feature proposal for openscad website url scheme
  - [x] Integration with cadhub [893](https://github.com/jscad/OpenJSCAD.org/discussions/893)
